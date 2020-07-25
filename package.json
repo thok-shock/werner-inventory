@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "mysql": "^2.18.1",
+    "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",

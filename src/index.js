@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
 import Overview from './Components/highLevel/Overview'
 import New from './Components/Reusable/New'
 import WISNavbar from './Components/highLevel/WISNavbar'
+import AllBoxLabels from './Components/highLevel/AllBoxLabels'
 
 class Main extends React.Component {
     constructor(props) {
@@ -31,6 +32,9 @@ class Main extends React.Component {
             </Route>
             <Route path='/new'>
                 <New />
+            </Route>
+            <Route path='/allBoxes'>
+                <AllBoxLabels />
             </Route>
             <Route path='/'>
                 <Overview />

@@ -30,4 +30,28 @@ function getLots() {
     })
 }
 
-module.exports = {getItems, getBoxes, getLots}
+function getBox(id) {
+    return new Promise((resolve, reject) => {
+        db.query({
+            sql: 'SELECT * FROM box WHERE boxID = ?',
+            values: [id]
+        }, function(err, row) {
+            err ? reject(err) : resolve(row)
+        })
+    })
+}
+
+function getItemByBoxID(id) {
+    return new Promise((resolve, reject) => {
+        db.query({
+            sql: 'SELECT * FROM Item WHERE boxID = ?',
+            values: [id]
+        }, function(err, row) {
+            err ? reject(err) : resolve(row)
+        })
+    })
+}
+
+
+
+module.exports = {getItems, getBoxes, getLots, getBox, getItemByBoxID}

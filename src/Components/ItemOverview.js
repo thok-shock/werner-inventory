@@ -10,25 +10,6 @@ export default class Overview extends React.Component {
         } //will need to load data at some point
     }
 
-
-componentDidMount() {
-    this.loadInventory()
-    .then(res => {
-        this.setState({inventory: res})
-    })
-    .catch(err => {
-        alert('Something went wrong')
-        console.log(err)
-    })
-}
-
-//do something with this once we have an API
-loadInventory() {
-    return new Promise((resolve, reject) => {
-        return true;
-    })
-}
-
 renderItems() {
     if(this.props && this.props.items && this.props.items.length > 0) {
         return this.props.items.map(item => {
@@ -43,13 +24,13 @@ render() {
         <h2>Items</h2>
         <Form>
                 <Form.Row>
-                    <Col md={8}>
+                    <Col xs={8}>
                     <Form.Group>
                     
                     <Form.Control className='searchBox' ></Form.Control>
                 </Form.Group>
                     </Col>
-                <Col md={4}>
+                <Col xs={4}>
                 <Button>Search</Button></Col>
                 </Form.Row>
                 

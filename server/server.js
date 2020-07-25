@@ -2,8 +2,9 @@ const express = require('express')
 const path = require('path')
 const CURR_PATH = process.env.NODE_ENV === 'prod' ? path.join(__dirname, '../dist/') : path.join(__dirname, '../dev/');
 const PORT = process.env.NODE_ENV === 'prod' ? 2000 : 3000;
-const {getItems, getBoxes, getLots} = require('./dbfunctions');
+const {getItems, getBoxes, getLots, getBox, getItemByBoxID} = require('./dbfunctions');
 const { addLot, addItem, addBox } = require('./new');
+
 console.log(process.env.NODE_ENV)
 
 const App = express()
@@ -12,9 +13,16 @@ App.use(express.json())
 
 const imgRouter = express.Router()
 const newRouter = express.Router()
+const boxRouter = express.Router()
+const loadRouter = express.Router()
 
 App.use('/img', imgRouter)
 App.use('/new', newRouter)
+App.use('/box', (req, res) => {
+    res.sendFile(CURR_PATH + 'index.html')
+})
+App.use('/load', loadRouter)
+
 
 
 App.get('/index.js', (req, res) => {
@@ -26,10 +34,6 @@ App.get('/', (req, res) => {
 })
 
 App.get('/overview', (req, res) => {
-    res.sendFile(CURR_PATH + 'index.html')
-})
-
-App.get('/box', (req, res) => {
     res.sendFile(CURR_PATH + 'index.html')
 })
 
@@ -111,6 +115,34 @@ newRouter.post('/item', (req, res) => {
         console.log(err)
         res.status(500).json(err)
     })
+})
+
+loadRouter.get('/box', (req, res) => {
+    const id = req.query.id
+    getBox(id)
+    .then(ans => {
+        res.json(ans)
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err)
+    })
+
+
+})
+
+loadRouter.get('/itemsofbox', (req, res) => {
+    const id = req.query.id
+    getItemByBoxID(id)
+    .then(ans => {
+        res.json(ans)
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err)
+    })
+
+
 })
 
 App.listen(PORT, () => {

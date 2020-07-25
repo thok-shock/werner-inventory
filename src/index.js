@@ -9,6 +9,8 @@ import Overview from './Components/highLevel/Overview'
 import New from './Components/Reusable/New'
 import WISNavbar from './Components/highLevel/WISNavbar'
 import AllBoxLabels from './Components/highLevel/AllBoxLabels'
+import Box from './Components/highLevel/Box'
+import BoxRoutes from './Components/highLevel/BoxRoutes'
 
 class Main extends React.Component {
     constructor(props) {
@@ -28,7 +30,7 @@ class Main extends React.Component {
                 <Overview />
             </Route>
             <Route path='/box'>
-                <div>hello</div>
+                <BoxRoutes />
             </Route>
             <Route path='/new'>
                 <New />

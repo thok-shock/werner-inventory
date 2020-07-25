@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 export default class BoxItem extends React.Component {
   constructor(props) {
@@ -6,7 +7,8 @@ export default class BoxItem extends React.Component {
     this.state = {
       value: 0,
       lotName: "",
-      fragile: 'No'
+      fragile: 'No',
+      redirect: false
     };
   }
 
@@ -48,16 +50,26 @@ export default class BoxItem extends React.Component {
       }
   }
 
+  renderRedirect() {
+    if (this.state.redirect) {
+      return <Redirect push to={`/box/${this.props.box.boxID}`} />
+    }
+  }
+
   render() {
     return (
-      <tr>
+      <tr onClick={e => {
+        this.setState({redirect: true})
+      }}>
         <td>{this.props.box.boxID}</td>
         <td>{this.props.box.boxName}</td>
         <td>${this.state.value}</td>
     <td>{this.state.fragile}</td>
         <td>{this.state.lotName}</td>
         <td>{this.props.box.boxStatus}</td>
+        {this.renderRedirect()}
       </tr>
+      
     );
   }
 }

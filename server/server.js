@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const CURR_PATH = process.env.NODE_ENV === 'prod' ? path.join(__dirname, '../dist/') : path.join(__dirname, '../dev/');
-const PORT = process.env.NODE_ENV === 'prod' ? 2000 : 3000;
+const PORT = process.env.NODE_ENV === 'prod' ? 2000 : 2998;
 const {getItems, getBoxes, getLots, getBox, getItemByBoxID} = require('./dbfunctions');
 const { addLot, addItem, addBox } = require('./new');
 

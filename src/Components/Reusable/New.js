@@ -15,6 +15,7 @@ export default class New extends React.Component {
             type: '',
             success: false
         }
+        console.log(window.location)
 
         this.updateState = this.updateState.bind(this)
         this.determineActive = this.determineActive.bind(this)
@@ -24,8 +25,8 @@ export default class New extends React.Component {
     }
 
     componentDidMount() {
-        Promise.all([loadItems(), loadBoxes(), loadLots()]).then(reso => {
-            this.setState({items: reso[0], boxes: reso[1], lots: reso[2]})
+        Promise.all([loadItems(), loadBoxes(), loadLots(), this.determineParams()]).then(reso => {
+            this.setState({items: reso[0], boxes: reso[1], lots: reso[2], type: reso[3]})
         })
     }
 
@@ -34,6 +35,13 @@ export default class New extends React.Component {
         this.setState({...this.state, [e.target.id]: e.target.value})
     }
 
+    determineParams() {
+        return new Promise((resolve, reject) => {
+            const params = new URLSearchParams(window.location.search)
+            console.log(params.get('type'))
+            resolve(params.get('type'))
+        })
+    }
     determineLots() {
         if (this.state.lots && this.state.lots.length > 0) {
             return this.state.lots.map(lot => {
@@ -178,7 +186,7 @@ export default class New extends React.Component {
                 <Form id='new'>
                 <Form.Group controlId='type'>
                     <Form.Label>Type</Form.Label>
-                <Form.Control as='select' onChange={this.updateState}>
+                <Form.Control as='select' value={this.state.type} onChange={this.updateState}>
                     <option value=''>- Select -</option>
                     <option value='lot'>Lot</option>
                     <option value='box'>Box</option>

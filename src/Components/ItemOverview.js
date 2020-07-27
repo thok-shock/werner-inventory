@@ -1,13 +1,16 @@
 import React from 'react';
 import { Table, Navbar, Form, Col, Button } from 'react-bootstrap';
 import ItemRow from './ItemRow';
+import { useHistory, Redirect } from 'react-router-dom';
 
 export default class Overview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            inventory: {}
+            inventory: {},
+            redirect: null
         } //will need to load data at some point
+
     }
 
 renderItems() {
@@ -18,20 +21,29 @@ renderItems() {
     }
 }
 
+renderRedirect() {
+    if (this.state.redirect) {
+        return <Redirect push to='/new?type=item' />
+    } else {
+        return <div> </div>
+    }
+}
+
 
 render() {
     return <div>
         <h2>Items</h2>
         <Form>
                 <Form.Row>
-                    <Col xs={8}>
+                    <Col xs={7}>
                     <Form.Group>
                     
                     <Form.Control className='searchBox' ></Form.Control>
                 </Form.Group>
                     </Col>
-                <Col xs={4}>
-                <Button>Search</Button></Col>
+                <Col xs={5}>
+                <Button className='mr-2'>Search</Button>
+                <Button className='mr-2' variant='success' onClick={e => {this.setState({redirect: true})}}><span className="oi oi-plus m-auto"></span> New</Button></Col>
                 </Form.Row>
                 
             </Form>
@@ -41,7 +53,7 @@ render() {
                     <td>#</td>
                     <td>Name</td>
                     <td>Value</td>
-                    <td>Box</td>
+                    <td>Box (#)</td>
                     <td>Lot</td>
                     <td>Fragile</td>
                 </tr>
@@ -50,6 +62,7 @@ render() {
                 {this.renderItems()}
             </tbody>
         </Table>
+        {this.renderRedirect()}
     </div>
 }
 

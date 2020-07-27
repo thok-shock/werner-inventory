@@ -3,7 +3,7 @@ const db = require('./database')
 function getItems() {
     return new Promise((resolve, reject) => {
         db.query({
-            sql: 'SELECT * FROM Item;'
+            sql: 'SELECT Item.*, box.lotID, box.boxName FROM Item JOIN box ON Item.boxID = box.boxID;'
         }, function(err, rows) {
             err ? reject(err) : resolve(rows)
         })
@@ -44,7 +44,7 @@ function getBox(id) {
 function getItemByBoxID(id) {
     return new Promise((resolve, reject) => {
         db.query({
-            sql: 'SELECT * FROM Item WHERE boxID = ?',
+            sql: 'SELECT Item.*, box.lotID, box.boxName FROM Item JOIN box ON Item.boxID = box.boxID WHERE Item.boxID = ?',
             values: [id]
         }, function(err, row) {
             err ? reject(err) : resolve(row)

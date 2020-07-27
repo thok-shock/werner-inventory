@@ -24,29 +24,32 @@ export default class BoxItem extends React.Component {
         value += item.itemPrice;
       }
     });
-    this.setState({ value: value }, this.determineLotName());
+    this.setState({ value: value });
   }
 
-  determineLotName() {
-    this.props.lots.forEach((lot) => {
-      if (lot.lotID === this.props.box.lotID) {
-        this.setState({lotName: lot.lotName },
-            this.determineFragile());
+  determineLotName(box) {
+    return this.props.lots.map((lot) => {
+      if (lot.lotID === box.lotID) {
+      return <div key={lot.lotID}>{lot.lotName}</div>
+      } else {
+        return null
       }
     });
   }
 
-  determineFragile() {
+  determineFragile(box) {
       let fragile = false;
       this.props.items.forEach((item) => {
-          if (item.boxID === this.props.box.boxID) {
+          if (item.boxID === box.boxID) {
               if (item.itemFragile) {
                 fragile = true;
               }
           }
       })
       if (fragile) {
-          this.setState({fragile: 'Yes'})
+        return <div className='text-danger'><strong>Yes</strong></div>
+      } else {
+        return <div className='text-muted'>No</div>
       }
   }
 
@@ -60,12 +63,12 @@ export default class BoxItem extends React.Component {
     return (
       <tr onClick={e => {
         this.setState({redirect: true})
-      }}>
+      }} style={{cursor: 'pointer'}}>
         <td>{this.props.box.boxID}</td>
         <td>{this.props.box.boxName}</td>
         <td>${this.state.value}</td>
-    <td>{this.state.fragile}</td>
-        <td>{this.state.lotName}</td>
+    <td>{this.determineFragile(this.props.box)}</td>
+        <td>{this.determineLotName(this.props.box)}</td>
         <td>{this.props.box.boxStatus}</td>
         {this.renderRedirect()}
       </tr>

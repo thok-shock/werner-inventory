@@ -22,14 +22,15 @@ export default class LotOverview extends React.Component {
             <h2>Lots</h2>
             <Form>
                 <Form.Row>
-                    <Col md={8}>
+                    <Col xs={7}>
                     <Form.Group>
                     
                     <Form.Control className='searchBox' ></Form.Control>
                 </Form.Group>
                     </Col>
-                <Col md={4}>
-                <Button>Search</Button></Col>
+                <Col xs={5}>
+                <Button className='mr-2'>Search</Button>
+                <Button className='mr-2' variant='success' href='/new?type=lot'><span className="oi oi-plus m-auto"></span> New</Button></Col>
                 </Form.Row>
                 
             </Form>

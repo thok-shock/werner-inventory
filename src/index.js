@@ -11,13 +11,19 @@ import WISNavbar from './Components/highLevel/WISNavbar'
 import AllBoxLabels from './Components/highLevel/AllBoxLabels'
 import Box from './Components/highLevel/Box'
 import BoxRoutes from './Components/highLevel/BoxRoutes'
+import Footer from './Components/highLevel/Footer'
 
 class Main extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            
+            selectedLot: 1
         }
+        this.updateState = this.updateState.bind(this)
+    }
+
+    updateState(e) {
+        this.setState({...this.state, [e.target.id]: e.target.value})
     }
 
     
@@ -27,7 +33,7 @@ class Main extends React.Component {
             <WISNavbar />
         <Switch>
             <Route path='/overview'>
-                <Overview />
+                <Overview selectedLot={this.state.selectedLot} updateState={this.updateState} />
             </Route>
             <Route path='/box'>
                 <BoxRoutes />
@@ -42,6 +48,8 @@ class Main extends React.Component {
                 <Overview />
             </Route>
         </Switch>
+        <br />
+        <Footer />
             </div>
     }
 }

@@ -79,8 +79,9 @@ App.get('/lots', (req, res) => {
     })
 })
 
-imgRouter.get('/:id', (req, res) => {
-    res.sendFile(CURR_PATH + '/img/' + req.params.id)
+imgRouter.get('/*?', (req, res) => {
+    //console.log(CURR_PATH + '/img/' + req.params[0])
+    res.sendFile(CURR_PATH + '/img/' + req.params[0])
 })
 
 newRouter.post('/lot', (req, res) => {

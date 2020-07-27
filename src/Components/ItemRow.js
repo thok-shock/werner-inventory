@@ -20,14 +20,22 @@ export default class ItemRow extends React.Component {
         })
     }
 
+    determineFragileName(fragile) {
+        if (fragile) {
+            return <div className='text-danger'><strong>Yes</strong></div>
+        } else {
+            return <div className='text-muted'>No</div>
+        }
+    }
+
     render() {
         return <tr>
             <td>{this.props.item.itemID}</td>
             <td>{this.props.item.itemName}</td>
             <td>${this.props.item.itemPrice}</td>
-            <td>{this.props.item.boxID}</td>
-    <td>{this.state.lotName}</td>
-            <td>{this.props.item.itemFragile}</td>
+            <td>{this.props.item.boxName} ({this.props.item.boxID})</td>
+            <td>{this.state.lotName}</td>
+            <td>{this.determineFragileName(this.props.item.itemFragile)}</td>
         </tr>
     }
 }

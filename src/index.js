@@ -4,7 +4,7 @@ import ItemOverview from './Components/ItemOverview'
 import { Container, Row, Col, Navbar } from 'react-bootstrap'
 import BoxOverview from './Components/BoxOverview'
 import LotOverview from './Components/LotOverview'
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom'
 import Overview from './Components/highLevel/Overview'
 import New from './Components/Reusable/New'
 import WISNavbar from './Components/highLevel/WISNavbar'
@@ -45,7 +45,7 @@ class Main extends React.Component {
                 <AllBoxLabels />
             </Route>
             <Route path='/'>
-                <Overview />
+                <Redirect push to='/overview' />
             </Route>
         </Switch>
         <br />

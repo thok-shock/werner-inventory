@@ -18,14 +18,13 @@ export default class Overview extends React.Component {
   }
 
   componentDidMount() {
-    Promise.all([loadItems(), loadBoxes(), loadLots()]).then((reso) => {
-      this.setState(
-        { items: reso[0], boxes: reso[1], lots: reso[2] },
-        function () {
           this.filterByLot(this.props.selectedLot);
-        }
-      );
-    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.lots !== prevProps.lots) {
+        this.filterByLot(this.props.selectedLot);
+    }
   }
 
   updateFilter(e) {
@@ -34,8 +33,11 @@ export default class Overview extends React.Component {
   }
 
   filterByLot(filter) {
-    var filteredItems = JSON.parse(JSON.stringify(this.state.items));
-    var filteredBoxes = JSON.parse(JSON.stringify(this.state.boxes));
+    if (this.props.items.length < 1 || this.props.boxes.length < 1) {
+      return null
+    }
+    var filteredItems = JSON.parse(JSON.stringify(this.props.items));
+    var filteredBoxes = JSON.parse(JSON.stringify(this.props.boxes));
     //console.log("here");
     filteredItems = filteredItems.filter((item) => {
         //console.log(item.lotID + ' ' + filter)
@@ -92,7 +94,7 @@ export default class Overview extends React.Component {
                         this.updateFilter(e);
                       }}
                     >
-                      {this.determineLots(this.state.lots)}
+                      {this.determineLots(this.props.lots)}
                     </Form.Control>
                   </Form>
                 </Col>
@@ -114,15 +116,15 @@ export default class Overview extends React.Component {
             <hr />
             <BoxOverview
               boxes={this.state.filteredBoxes}
-              items={this.state.items}
-              lots={this.state.lots}
+              items={this.props.items}
+              lots={this.props.lots}
             />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
             <hr />
-            <ItemOverview items={this.state.filteredItems} lots={this.state.lots} />
+            <ItemOverview items={this.state.filteredItems} lots={this.props.lots} />
           </Col>
         </Row>
       </Container>

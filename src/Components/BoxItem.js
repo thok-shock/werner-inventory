@@ -18,28 +18,38 @@ export default class BoxItem extends React.Component {
 
   determineBoxValue() {
     let value = 0;
-    this.props.items.forEach((item) => {
-      //console.log(item.itemPrice);
-      if (item.boxID === this.props.box.boxID) {
-        value += item.itemPrice;
-      }
-    });
-    this.setState({ value: value });
+    if (this.props.items.length > 0) {
+      this.props.items.forEach((item) => {
+        //console.log(item.itemPrice);
+        if (item.boxID === this.props.box.boxID) {
+          value += item.itemPrice;
+        }
+      });
+      this.setState({ value: value });
+    } else {
+      this.setState({value: 'NaN'})
+    }
   }
 
   determineLotName(box) {
-    return this.props.lots.map((lot) => {
-      if (lot.lotID === box.lotID) {
-      return <div key={lot.lotID}>{lot.lotName}</div>
-      } else {
-        return null
-      }
-    });
+    if (this.props.lots.length > 0) {
+      return this.props.lots.map((lot) => {
+        if (lot.lotID === box.lotID) {
+        return <div key={lot.lotID}>{lot.lotName}</div>
+        } else {
+          return null
+        }
+      });
+    } else {
+      return <div>NaN</div>
+    }
+    
   }
 
   determineFragile(box) {
       let fragile = false;
-      this.props.items.forEach((item) => {
+      if (this.props.items.length > 0) {
+        this.props.items.forEach((item) => {
           if (item.boxID === box.boxID) {
               if (item.itemFragile) {
                 fragile = true;
@@ -51,6 +61,10 @@ export default class BoxItem extends React.Component {
       } else {
         return <div className='text-muted'>No</div>
       }
+      } else {
+        return <div>NaN</div>
+      }
+      
   }
 
   renderRedirect() {

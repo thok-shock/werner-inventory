@@ -3,18 +3,40 @@ import { loadBoxes, loadItems } from "../loadFunctions";
 import QRCode from "qrcode.react";
 import { Container, Row } from "react-bootstrap";
 
+
+function filterTags(boxes, selectedBoxes) {
+  const intBox = selectedBoxes.map(select => {
+    return parseInt(select)
+  })
+  //console.log(intBox)
+  return boxes.filter(box => intBox.includes(box.boxID))
+}
+
 export default class AllBoxLabels extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       boxes: [],
       items: [],
+      filteredBoxes: []
     };
   }
 
   componentDidMount() {
     Promise.all([loadBoxes(), loadItems()]).then((reso) => {
-      this.setState({ boxes: reso[0], items: reso[1] });
+      this.setState({ boxes: reso[0], items: reso[1] }, function() {
+        const params = new URLSearchParams(window.location.search)
+        if (params.has('boxID')) {
+          const newArray = params.get('boxID').split(',')
+        //console.log(newArray)
+      const filteredBoxes = filterTags(this.state.boxes, newArray)
+      //console.log(filteredBoxes)
+      this.setState({filteredBoxes: filteredBoxes})
+        } else {
+          this.setState({filteredBoxes: this.state.boxes})
+        }
+      
+      });
     });
   }
 
@@ -50,8 +72,10 @@ export default class AllBoxLabels extends React.Component {
   }
 
   determineCodes(boxPair) {
+    console.log(boxPair)
       return boxPair.map((box, count) => {
-          console.log(box)
+          //console.log(box)
+          if (box) {
         return (
             <td
               className="inline-block"
@@ -74,7 +98,9 @@ export default class AllBoxLabels extends React.Component {
                 {this.determineToPrintFragile(box)}
               </div>
             </td>
-        );
+        );} else {
+          return <td key={count}></td>
+        }
       });
   }
 
@@ -105,17 +131,19 @@ export default class AllBoxLabels extends React.Component {
   }
 
   renderTable() {
-    if (this.state.boxes && this.state.boxes.length > 0) {
+    if (this.state.filteredBoxes && this.state.filteredBoxes.length > 0) {
         let pairArray = []
         let num = 0
 
-        let boxes = JSON.parse(JSON.stringify(this.state.boxes))
+        let boxes = JSON.parse(JSON.stringify(this.state.filteredBoxes))
+        //console.log(boxes)
         
         for (var i = 0; i < boxes.length; i+=2) {
             var smallArray = []
             smallArray[0] = boxes[i]
             smallArray[1] = boxes[i+1]
             pairArray.push(smallArray) 
+            //console.log(pairArray)
         }
         return <table>
             <tbody>
@@ -130,7 +158,7 @@ export default class AllBoxLabels extends React.Component {
   determineData(boxPairs) {
       let num = 0;
       return boxPairs.map((box, index) => {
-        console.log(box)
+        //console.log(box)
             return <tr key={index} style={{verticalAlign: 'top'}}>
                 {this.determineCodes(box)}
             </tr>

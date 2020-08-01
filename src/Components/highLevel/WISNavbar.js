@@ -21,8 +21,9 @@ export default function WISNavbar(props) {
         </Dropdown.Menu>
         
         </Dropdown></Nav>
+        <Nav className='mr-2'><Button variant='outline-primary' onClick={() => {history.push('/tags')}}>Tags</Button></Nav>
         <Nav className='mr-2'><Button variant='outline-primary' onClick={() => {history.push('/overview')}}>Overview</Button></Nav>
-        <Nav className='mr-2'><Button variant='outline-primary' onClick={() => {history.push('/overview')}}>About</Button></Nav>
+        <Nav className='mr-2'><Button variant='outline-primary' onClick={() => {history.push('/about')}}>About</Button></Nav>
     </Navbar.Collapse>
 </Navbar>
 }

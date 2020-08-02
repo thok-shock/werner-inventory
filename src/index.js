@@ -21,6 +21,7 @@ import Footer from "./Components/highLevel/Footer";
 import Tags from "./Components/highLevel/Tags";
 import { loadItems, loadBoxes, loadLots } from './Components/loadFunctions';
 import About from "./Components/highLevel/About";
+import ItemRoutes from "./Components/highLevel/ItemRoutes";
 
 class Main extends React.Component {
   constructor(props) {
@@ -72,6 +73,9 @@ class Main extends React.Component {
           </Route>
           <Route path='/about'>
             <About />
+          </Route>
+          <Route path='/item'>
+            <ItemRoutes items={this.state.items} boxes={this.state.boxes} lots={this.state.lots} />
           </Route>
           <Route path="/">
             <Redirect push to="/overview" />

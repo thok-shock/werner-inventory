@@ -107,6 +107,10 @@ console.log(process.env.NODE_ENV);
     res.sendFile(CURR_PATH + "index.html");
   });
 
+  App.get("/item/:id", (req, res) => {
+    res.sendFile(CURR_PATH + "index.html");
+  });
+
   App.get("/items", (req, res) => {
     getItems()
       .then((rows) => {

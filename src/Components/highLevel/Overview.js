@@ -4,6 +4,7 @@ import ItemOverview from "../ItemOverview";
 import BoxOverview from "../BoxOverview";
 import LotOverview from "../LotOverview";
 import { loadItems, loadBoxes, loadLots } from "../loadFunctions";
+import BetterItemOverview from "../Overviews/BetterItemOverview";
 
 export default class Overview extends React.Component {
   constructor(props) {
@@ -124,7 +125,7 @@ export default class Overview extends React.Component {
         <Row>
           <Col md={12}>
             <hr />
-            <ItemOverview items={this.state.filteredItems} lots={this.props.lots} />
+            <BetterItemOverview items={this.state.filteredItems} lots={this.props.lots} />
           </Col>
         </Row>
       </Container>

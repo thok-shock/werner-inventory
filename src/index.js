@@ -20,6 +20,7 @@ import BoxRoutes from "./Components/highLevel/BoxRoutes";
 import Footer from "./Components/highLevel/Footer";
 import Tags from "./Components/highLevel/Tags";
 import { loadItems, loadBoxes, loadLots } from './Components/loadFunctions';
+import About from "./Components/highLevel/About";
 
 class Main extends React.Component {
   constructor(props) {
@@ -68,6 +69,9 @@ class Main extends React.Component {
           </Route>
           <Route path="/tags">
             <Tags selectedLot={this.state.selectedLot} lots={this.state.lots} boxes={this.state.boxes} items={this.state.items} />
+          </Route>
+          <Route path='/about'>
+            <About />
           </Route>
           <Route path="/">
             <Redirect push to="/overview" />
